@@ -9,12 +9,13 @@ class ItemsBloc extends Bloc<String, List<String>> {
   ItemsBloc({ItemsRepository repo}) : _repo = repo ?? ItemsRepository();
 
   @override
-  List<String> get initialState => _items;
+  List<String> get initialState => [];
 
   @override
   Stream<List<String>> mapEventToState(String item) async* {
     await _repo.createItem(item);
-    _items = [..._items, item];
+    final items = await _repo.getItems();
+    _items = items.map((item) => item.text).toList();
     yield _items;
   }
 }

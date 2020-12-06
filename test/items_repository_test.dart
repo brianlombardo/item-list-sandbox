@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:item_list/item_model.dart';
@@ -55,18 +57,19 @@ void main() {
       expect(listEquals(actual, expected), isTrue);
     });
   });
-  //
-  // group('creating', () {
-  //   test('should POST items to server', () {
-  //     final itemText = "item text!!!";
-  //     testObject.createItem(itemText);
-  //
-  //     final expectedBody = Item(id: null, text: itemText).toJson();
-  //     debugPrint(expectedBody.toString());
-  //     verify(mockClient.post(expectedUri,
-  //         headers: expectedHeaders, body: expectedBody));
-  //   });
-  // });
+
+  group('creating', () {
+    test('should POST items to server', () {
+      testObject.createItem("item text!!!");
+
+      final expectedBody =
+          '{"id":null,"text":"item text!!!"}'; //jsonEncode(Item(text: itemText).toJson());
+
+      verify(
+        mockClient.post(expectedUri, headers: expectedHeaders, body: expectedBody),
+      );
+    });
+  });
 }
 
 class MockHttpClient extends Mock implements Client {}

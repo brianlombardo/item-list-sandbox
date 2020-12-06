@@ -20,7 +20,7 @@ class ItemsRepository {
 
   Future<http.Response> createItem(String item) async {
     return _client.post(
-      SERVER,
+      Uri.parse(SERVER),
       headers: HEADERS,
       body: jsonEncode(Item(text: item).toJson()),
     );

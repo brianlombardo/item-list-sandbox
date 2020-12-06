@@ -1,4 +1,4 @@
-package items
+package main
 
 var database = make(map[string]interface{})
 
