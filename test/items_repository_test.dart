@@ -10,12 +10,8 @@ void main() {
   Client mockClient;
   Response mockResponse;
 
-  final expectedHeaders = {
-    'Content-Type': 'application/json; charset=UTF-8',
-  };
-
-  final expectedUri = Uri.parse('http://localhost:3000/api/v1/items');
-
+  final expectedUri = Uri.parse(SERVER);
+  final expectedHeaders = HEADERS;
   final getResponse = '''
       [
         {
@@ -38,7 +34,7 @@ void main() {
 
     when(mockResponse.body).thenReturn(getResponse);
 
-    testObject = ItemsRepository(mockClient);
+    testObject = ItemsRepository(client: mockClient);
   });
 
   group('fetching', () {
@@ -59,7 +55,7 @@ void main() {
       expect(listEquals(actual, expected), isTrue);
     });
   });
-
+  //
   // group('creating', () {
   //   test('should POST items to server', () {
   //     final itemText = "item text!!!";

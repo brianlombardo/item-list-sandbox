@@ -2,18 +2,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:item_list/item_model.dart';
 
-class ItemsRepository {
-  final http.Client client;
-  final serverUrl = 'http://localhost:3000/api/v1/items';
-  // final headers = {'Accept': 'application/json'};
-  final headers = {
-    'Content-Type': 'application/json; charset=UTF-8',
-  };
+const SERVER = 'http://10.0.2.2:3000/api/v1/items';
+const HEADERS = {'Content-Type': 'application/json'};
 
-  ItemsRepository(this.client);
+class ItemsRepository {
+  final http.Client _client;
+
+  ItemsRepository({http.Client client}) : _client = client ?? http.Client();
 
   Future<List<Item>> getItems() async {
-    var res = await client.get(Uri.parse(serverUrl), headers: headers);
+    var res = await _client.get(Uri.parse(SERVER), headers: HEADERS);
 
     return (json.decode(res.body) as List<dynamic>)
         .map((e) => Item.fromJson(e))
@@ -21,10 +19,10 @@ class ItemsRepository {
   }
 
   Future<http.Response> createItem(String item) async {
-    return client.post(
-      serverUrl,
-      headers: headers,
-      body: Item(text: item).toJson(),
+    return _client.post(
+      SERVER,
+      headers: HEADERS,
+      body: jsonEncode(Item(text: item).toJson()),
     );
   }
 }
