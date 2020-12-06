@@ -21,7 +21,7 @@ void main() {
     );
 
     blocTest(
-      "adds  multiple items to list",
+      "adds multiple items to list",
       build: () async => ItemsBloc(),
       act: (bloc) {
         bloc.add("Test");

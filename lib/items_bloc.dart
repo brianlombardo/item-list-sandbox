@@ -9,6 +9,7 @@ class ItemsBloc extends Bloc<String, List<String>> {
 
   @override
   Stream<List<String>> mapEventToState(String item) async* {
+    // repo.addItem(item);
     _items = [..._items, item];
     yield _items;
   }
