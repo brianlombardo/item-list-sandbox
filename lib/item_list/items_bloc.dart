@@ -1,24 +1,24 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:item_list/item_list/items_repository.dart';
+import 'package:item_list/item_model.dart';
 
-class ItemsBloc extends Bloc<ListEvent, List<String>> {
-  List<String> _items = [];
+class ItemsBloc extends Bloc<ListEvent, List<Item>> {
+  List<Item> _items = [];
   final ItemsRepository _repo;
 
   ItemsBloc({ItemsRepository repo}) : _repo = repo ?? ItemsRepository();
 
   @override
-  List<String> get initialState => [];
+  List<Item> get initialState => [];
 
   @override
-  Stream<List<String>> mapEventToState(ListEvent event) async* {
+  Stream<List<Item>> mapEventToState(ListEvent event) async* {
     switch (event.runtimeType) {
       case AddItem:
         {
           await _repo.createItem((event as AddItem).itemText);
-          final items = await _repo.getItems();
-          _items = items.map((item) => item.text).toList();
+          _items = await _repo.getItems();
           yield _items;
         }
     }

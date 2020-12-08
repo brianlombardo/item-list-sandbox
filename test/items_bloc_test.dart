@@ -21,6 +21,8 @@ void main() {
     );
 
     final testItemText = "Test";
+    final testItemText1 = "Test1";
+
     blocTest(
       "adds item to list",
       build: () async {
@@ -33,19 +35,17 @@ void main() {
         return bloc.add(AddItem(testItemText));
       },
       expect: [
-        [testItemText]
+        [Item(text: testItemText)]
       ],
     );
-
-    var testItemText1 = "Test1";
-    final testItemResponses = [
-      [Item(text: testItemText)],
-      [Item(text: testItemText), Item(text: testItemText1)]
-    ];
 
     blocTest(
       "adds multiple items to list",
       build: () async {
+        final testItemResponses = [
+          [Item(text: testItemText)],
+          [Item(text: testItemText), Item(text: testItemText1)]
+        ];
         when(mockRepo.getItems())
             .thenAnswer((_) async => testItemResponses.removeAt(0));
         return ItemsBloc(repo: mockRepo);
@@ -56,10 +56,32 @@ void main() {
         return;
       },
       expect: [
-        [testItemText],
-        [testItemText, testItemText1]
+        [Item(text: testItemText)],
+        [Item(text: testItemText), Item(text: testItemText1)]
       ],
     );
+
+    // blocTest(
+    //   "deletes item from list",
+    //   build: () async {
+    //     final testItemResponses = [
+    //       [Item(text: testItemText)],
+    //       []
+    //     ];
+    //     when(mockRepo.getItems())
+    //         .thenAnswer((_) async => testItemResponses.removeAt(0));
+    //     return ItemsBloc(repo: mockRepo);
+    //   },
+    //   act: (bloc) {
+    //     bloc.add(AddItem(testItemText));
+    //     // bloc.add(DeleteItem());
+    //     return;
+    //   },
+    //   expect: [
+    //     [testItemText],
+    //     []
+    //   ],
+    // );
   });
 }
 
