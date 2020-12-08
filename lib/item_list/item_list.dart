@@ -11,16 +11,19 @@ class ItemList extends StatelessWidget {
           itemBuilder: (context, index) {
             final item = items[index];
 
-            return ListTile(
-              title: Text(item),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      // builder: (context) => ItemDetailsScreen(item)),
-                      builder: (context) => ItemDetailsScreen(item)),
-                );
-              },
+            return Dismissible(
+              onDismissed: (direction) => {},
+              key: UniqueKey(),
+              child: ListTile(
+                title: Text(item),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ItemDetailsScreen(item)),
+                  );
+                },
+              ),
             );
           },
           itemCount: items.length,

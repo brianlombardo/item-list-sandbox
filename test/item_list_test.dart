@@ -100,4 +100,32 @@ void main() {
     expect(textFinder, findsOneWidget);
     expect(textFinder.atIndex<Text>(0).data, testData[0]);
   });
+
+  testWidgets(
+      'when item is swiped away, then the item should be removed from list',
+      (WidgetTester tester) async {
+    final testData = ["Test"];
+    when(bloc.state).thenReturn(testData);
+
+    await tester.pumpWidget(
+      BlocProvider<ItemsBloc>.value(
+        value: bloc,
+        child: MaterialApp(
+          home: Scaffold(
+            body: ItemList(),
+          ),
+        ),
+      ),
+    );
+
+    Finder dismissibleFinder = find.byType(Dismissible);
+    expect(dismissibleFinder, findsOneWidget);
+    expect(bloc.state, equals(testData));
+
+    await tester.drag(dismissibleFinder, Offset(500.0, 0.0));
+    await tester.pumpAndSettle();
+
+    expect(dismissibleFinder, findsNothing);
+    expect(bloc.state, equals([]));
+  });
 }
