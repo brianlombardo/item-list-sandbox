@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:item_list/item_details/item_details_screen.dart';
 import 'package:item_list/item_list/item_list.dart';
 import 'package:item_list/item_list/items_bloc.dart';
 import 'package:mockito/mockito.dart';
@@ -70,5 +71,33 @@ void main() {
     expect(textFinder.atIndex<Text>(0).data, testData[0]);
     expect(textFinder.atIndex<Text>(1).data, testData[1]);
     expect(textFinder.atIndex<Text>(2).data, testData[2]);
+  });
+
+  testWidgets('when item is selected, then the details screen is shown',
+      (WidgetTester tester) async {
+    final testData = ["Test"];
+    when(bloc.state).thenReturn(testData);
+
+    await tester.pumpWidget(
+      BlocProvider<ItemsBloc>.value(
+        value: bloc,
+        child: MaterialApp(
+          home: Scaffold(
+            body: ItemList(),
+          ),
+        ),
+      ),
+    );
+
+    Finder tileFinder = find.byType(ListTile);
+    expect(tileFinder, findsOneWidget);
+
+    await tester.tap(tileFinder);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ItemDetailsScreen), findsNWidgets(1));
+    var textFinder = find.byType(Text);
+    expect(textFinder, findsOneWidget);
+    expect(textFinder.atIndex<Text>(0).data, testData[0]);
   });
 }
