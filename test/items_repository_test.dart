@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
-import 'package:item_list/item_model.dart';
 import 'package:item_list/item_list/items_repository.dart';
+import 'package:item_list/item_model.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -67,6 +65,15 @@ void main() {
 
       verify(
         mockClient.post(expectedUri, headers: expectedHeaders, body: expectedBody),
+      );
+    });
+  });
+  group('deleting', () {
+    test('should DELETE items from server', () {
+      testObject.deleteItem("ID");
+
+      verify(
+        mockClient.delete(Uri.parse("$SERVER/ID"), headers: expectedHeaders),
       );
     });
   });

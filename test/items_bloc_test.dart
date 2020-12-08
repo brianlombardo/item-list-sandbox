@@ -21,7 +21,6 @@ void main() {
     );
 
     final testItemText = "Test";
-    final testItemText1 = "Test1";
 
     blocTest(
       "adds item to list",
@@ -37,51 +36,33 @@ void main() {
       expect: [
         [Item(text: testItemText)]
       ],
+      verify: (_) {
+        verify(mockRepo.createItem(testItemText));
+        return;
+      },
     );
 
+    final item = Item(id: "ID", text: testItemText);
     blocTest(
-      "adds multiple items to list",
+      "deletes item from list",
       build: () async {
-        final testItemResponses = [
-          [Item(text: testItemText)],
-          [Item(text: testItemText), Item(text: testItemText1)]
-        ];
         when(mockRepo.getItems())
-            .thenAnswer((_) async => testItemResponses.removeAt(0));
+            .thenAnswer((_) async => []);
+
         return ItemsBloc(repo: mockRepo);
       },
       act: (bloc) {
-        bloc.add(AddItem(testItemText));
-        bloc.add(AddItem(testItemText1));
+        bloc.add(DeleteItem(item.id));
         return;
       },
       expect: [
-        [Item(text: testItemText)],
-        [Item(text: testItemText), Item(text: testItemText1)]
+        []
       ],
+      verify: (_) {
+        verify(mockRepo.deleteItem(item.id)).called(1);
+        return;
+      },
     );
-
-    // blocTest(
-    //   "deletes item from list",
-    //   build: () async {
-    //     final testItemResponses = [
-    //       [Item(text: testItemText)],
-    //       []
-    //     ];
-    //     when(mockRepo.getItems())
-    //         .thenAnswer((_) async => testItemResponses.removeAt(0));
-    //     return ItemsBloc(repo: mockRepo);
-    //   },
-    //   act: (bloc) {
-    //     bloc.add(AddItem(testItemText));
-    //     // bloc.add(DeleteItem());
-    //     return;
-    //   },
-    //   expect: [
-    //     [testItemText],
-    //     []
-    //   ],
-    // );
   });
 }
 

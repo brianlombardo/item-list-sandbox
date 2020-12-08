@@ -18,10 +18,16 @@ class ItemsBloc extends Bloc<ListEvent, List<Item>> {
       case AddItem:
         {
           await _repo.createItem((event as AddItem).itemText);
-          _items = await _repo.getItems();
-          yield _items;
+          break;
+        }
+      case DeleteItem:
+        {
+          final id = (event as DeleteItem).itemId;
+          await _repo.deleteItem(id);
         }
     }
+    _items = await _repo.getItems();
+    yield _items;
   }
 }
 
@@ -34,4 +40,13 @@ class AddItem extends ListEvent {
 
   @override
   List<Object> get props => [itemText];
+}
+
+class DeleteItem extends ListEvent {
+  final String itemId;
+
+  DeleteItem(this.itemId);
+
+  @override
+  List<Object> get props => [itemId];
 }

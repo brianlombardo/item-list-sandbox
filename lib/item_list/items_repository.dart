@@ -25,4 +25,11 @@ class ItemsRepository {
       body: jsonEncode(Item(text: item).toJson()),
     );
   }
+
+  Future<http.Response> deleteItem(String id) {
+    return _client.delete(
+      Uri.parse("$SERVER/$id"),
+      headers: HEADERS,
+    );
+  }
 }
