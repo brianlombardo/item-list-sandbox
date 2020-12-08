@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:item_list/item_details/item_details_screen.dart';
 import 'package:item_list/item_list/item_list.dart';
 import 'package:item_list/item_list/items_bloc.dart';
+import 'package:item_list/item_model.dart';
 import 'package:mockito/mockito.dart';
 
 import 'item_list_mocks.dart';
@@ -14,7 +15,7 @@ void main() {
   final MockInfoBloc bloc = MockInfoBloc();
 
   testWidgets('list is initially empty', (WidgetTester tester) async {
-    when(bloc.state).thenReturn(<String>[]);
+    when(bloc.state).thenReturn([]);
 
     await tester.pumpWidget(
       BlocProvider<ItemsBloc>.value(
@@ -39,9 +40,13 @@ void main() {
   testWidgets(
       'when items are emitted by the bloc, then the list will display them',
       (WidgetTester tester) async {
-    when(bloc.state).thenReturn(<String>[]);
-    final testData = ["Test", "Test 2", "Test 3"];
-    whenListen(bloc, Stream.fromIterable([<String>[], testData]));
+    when(bloc.state).thenReturn([]);
+    final testData = [
+      Item(text: "Test"),
+      Item(text: "Test 2"),
+      Item(text: "Test 3")
+    ];
+    whenListen(bloc, Stream.fromIterable([<Item>[], testData]));
 
     await tester.pumpWidget(
       BlocProvider<ItemsBloc>.value(
@@ -68,14 +73,14 @@ void main() {
     expect(itemCount, equals(3));
     expect(tileFinder, findsNWidgets(3));
     expect(textFinder, findsNWidgets(3));
-    expect(textFinder.atIndex<Text>(0).data, testData[0]);
-    expect(textFinder.atIndex<Text>(1).data, testData[1]);
-    expect(textFinder.atIndex<Text>(2).data, testData[2]);
+    expect(textFinder.atIndex<Text>(0).data, testData[0].text);
+    expect(textFinder.atIndex<Text>(1).data, testData[1].text);
+    expect(textFinder.atIndex<Text>(2).data, testData[2].text);
   });
 
   testWidgets('when item is selected, then the details screen is shown',
       (WidgetTester tester) async {
-    final testData = ["Test"];
+    final testData = [Item(text: "Test")];
     when(bloc.state).thenReturn(testData);
 
     await tester.pumpWidget(
@@ -98,13 +103,13 @@ void main() {
     expect(find.byType(ItemDetailsScreen), findsNWidgets(1));
     var textFinder = find.byType(Text);
     expect(textFinder, findsOneWidget);
-    expect(textFinder.atIndex<Text>(0).data, testData[0]);
+    expect(textFinder.atIndex<Text>(0).data, testData[0].text);
   });
 
   testWidgets(
       'when item is swiped away, then the item should be removed from list',
       (WidgetTester tester) async {
-    final testData = ["Test"];
+    final testData = [Item(text: "Test")];
     when(bloc.state).thenReturn(testData);
 
     await tester.pumpWidget(
@@ -126,6 +131,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(dismissibleFinder, findsNothing);
-    expect(bloc.state, equals([]));
+    //TODO: verify bloc delete event
   });
 }
