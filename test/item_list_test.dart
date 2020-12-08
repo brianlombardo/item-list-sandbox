@@ -2,8 +2,8 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:item_list/item_list.dart';
-import 'package:item_list/items_bloc.dart';
+import 'package:item_list/item_list/item_list.dart';
+import 'package:item_list/item_list/items_bloc.dart';
 import 'package:mockito/mockito.dart';
 
 import 'item_list_mocks.dart';

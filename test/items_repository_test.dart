@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:item_list/item_model.dart';
-import 'package:item_list/items_repository.dart';
+import 'package:item_list/item_list/items_repository.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -63,7 +63,7 @@ void main() {
       testObject.createItem("item text!!!");
 
       final expectedBody =
-          '{"id":null,"text":"item text!!!"}'; //jsonEncode(Item(text: itemText).toJson());
+          '{"id":null,"text":"item text!!!"}';
 
       verify(
         mockClient.post(expectedUri, headers: expectedHeaders, body: expectedBody),

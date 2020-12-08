@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:item_list/items_repository.dart';
+import 'package:item_list/item_list/items_repository.dart';
 
 class ItemsBloc extends Bloc<String, List<String>> {
   List<String> _items = [];

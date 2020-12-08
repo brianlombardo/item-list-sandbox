@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:item_list/item_input.dart';
-import 'package:item_list/item_list.dart';
-import 'package:item_list/item_list_screen.dart';
+import 'package:item_list/item_list/item_input.dart';
+import 'package:item_list/item_list/item_list.dart';
+import 'package:item_list/item_list/item_list_screen.dart';
 
 void main() {
   // testWidgets('screen will show item text when user adds an item',

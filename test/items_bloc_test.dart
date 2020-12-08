@@ -1,8 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:item_list/item_model.dart';
-import 'package:item_list/items_bloc.dart';
-import 'package:item_list/items_repository.dart';
+import 'package:item_list/item_list/items_bloc.dart';
+import 'package:item_list/item_list/items_repository.dart';
 import 'package:mockito/mockito.dart';
 
 void main() {

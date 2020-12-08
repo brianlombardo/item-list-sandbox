@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'items_bloc.dart';
 
 class ItemInput extends StatefulWidget {
-  final controller = TextEditingController();
+  final _controller = TextEditingController();
 
   @override
   _ItemInputState createState() => _ItemInputState();
@@ -15,13 +15,13 @@ class _ItemInputState extends State<ItemInput> {
   @override
   Widget build(BuildContext context) =>
       TextField(
-        controller: widget.controller,
+        controller: widget._controller,
         style: TextStyle(color: Colors.blue),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           suffixIcon: IconButton(
             onPressed: () {
-              _getBloc().add(widget.controller.text);
+              _getBloc().add(widget._controller.text);
             },
             icon: Icon(
               Icons.add,
