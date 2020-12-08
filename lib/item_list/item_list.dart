@@ -13,7 +13,10 @@ class ItemList extends StatelessWidget {
             final item = items[index];
 
             return Dismissible(
-              onDismissed: (direction) => {},
+              onDismissed: (direction) => {
+                BlocProvider.of<ItemsBloc>(context)
+                    .add(DeleteItem(items[index].id))
+              },
               key: UniqueKey(),
               child: ListTile(
                 title: Text(item.text),

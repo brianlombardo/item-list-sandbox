@@ -109,7 +109,7 @@ void main() {
   testWidgets(
       'when item is swiped away, then the item should be removed from list',
       (WidgetTester tester) async {
-    final testData = [Item(text: "Test")];
+    final testData = [Item(id: "ID", text: "Test")];
     when(bloc.state).thenReturn(testData);
 
     await tester.pumpWidget(
@@ -131,6 +131,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(dismissibleFinder, findsNothing);
-    //TODO: verify bloc delete event
+    verify(bloc.add(DeleteItem("ID")));
   });
 }
