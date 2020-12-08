@@ -59,7 +59,28 @@ void main() {
         []
       ],
       verify: (_) {
-        verify(mockRepo.deleteItem(item.id)).called(1);
+        verify(mockRepo.deleteItem(item.id));
+        return;
+      },
+    );
+
+    blocTest(
+      "refreshes the list",
+      build: () async {
+        when(mockRepo.getItems())
+            .thenAnswer((_) async => []);
+
+        return ItemsBloc(repo: mockRepo);
+      },
+      act: (bloc) {
+        bloc.add(RefreshItems());
+        return;
+      },
+      expect: [
+        []
+      ],
+      verify: (_) {
+        verify(mockRepo.getItems());
         return;
       },
     );

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:item_list/item_model.dart';
 
-const SERVER = 'http://10.0.2.2:3000/api/v1/items';
+const SERVER = 'http://localhost:3000/api/v1/items';
 const HEADERS = {'Content-Type': 'application/json'};
 
 class ItemsRepository {
