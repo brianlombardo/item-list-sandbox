@@ -30,7 +30,7 @@ void main() {
         return ItemsBloc(repo: mockRepo);
       },
       act: (bloc) {
-        return bloc.add(testItemText);
+        return bloc.add(AddItem(testItemText));
       },
       expect: [
         [testItemText]
@@ -51,8 +51,8 @@ void main() {
         return ItemsBloc(repo: mockRepo);
       },
       act: (bloc) {
-        bloc.add(testItemText);
-        bloc.add(testItemText1);
+        bloc.add(AddItem(testItemText));
+        bloc.add(AddItem(testItemText1));
         return;
       },
       expect: [

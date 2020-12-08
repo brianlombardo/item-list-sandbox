@@ -29,6 +29,6 @@ void main() {
     await tester.tap(find.byIcon(Icons.add));
     await tester.pump();
 
-    verify(bloc.add(testText));
+    verify(bloc.add(AddItem(testText)));
   });
 }

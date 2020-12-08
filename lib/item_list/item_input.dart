@@ -21,7 +21,7 @@ class _ItemInputState extends State<ItemInput> {
           border: OutlineInputBorder(),
           suffixIcon: IconButton(
             onPressed: () {
-              _getBloc().add(widget._controller.text);
+              _getBloc().add(AddItem(widget._controller.text));
             },
             icon: Icon(
               Icons.add,
