@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:item_list/item_list/connected_items_bloc.dart';
 
 import 'item_input.dart';
 import 'item_list.dart';
@@ -8,7 +9,8 @@ import 'items_bloc.dart';
 class ItemListScreen extends StatelessWidget {
   final _itemsBloc;
 
-  ItemListScreen({ItemsBloc itemsBloc}) : _itemsBloc = itemsBloc ?? ItemsBloc();
+  ItemListScreen({ItemsBloc itemsBloc})
+      : _itemsBloc = itemsBloc ?? ConnectedItemsBloc();
 
   @override
   Widget build(BuildContext context) {

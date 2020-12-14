@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:item_list/item_list/connected_items_bloc.dart';
 import 'package:item_list/item_list/items_bloc.dart';
 import 'package:item_list/item_list/items_repository.dart';
 import 'package:item_list/item_model.dart';
@@ -17,7 +18,7 @@ void main() {
   group("Items bloc", () {
     blocTest(
       "empty list initial state",
-      build: () async => ItemsBloc(repo: mockRepo),
+      build: () async => ConnectedItemsBloc(repo: mockRepo),
       skip: 0,
       expect: [[]],
     );
@@ -30,7 +31,7 @@ void main() {
         when(mockRepo.getItems())
             .thenAnswer((_) async => [Item(text: testItemText)]);
 
-        return ItemsBloc(repo: mockRepo);
+        return ConnectedItemsBloc(repo: mockRepo);
       },
       act: (bloc) {
         return bloc.add(AddItem(testItemText));
@@ -50,7 +51,7 @@ void main() {
       build: () async {
         when(mockRepo.getItems()).thenAnswer((_) async => []);
 
-        return ItemsBloc(repo: mockRepo);
+        return ConnectedItemsBloc(repo: mockRepo);
       },
       act: (bloc) {
         bloc.add(DeleteItem(item.id));
@@ -68,7 +69,7 @@ void main() {
       build: () async {
         when(mockRepo.getItems()).thenAnswer((_) async => []);
 
-        return ItemsBloc(repo: mockRepo);
+        return ConnectedItemsBloc(repo: mockRepo);
       },
       act: (bloc) {
         bloc.add(RefreshItems());
