@@ -8,8 +8,8 @@ import 'package:item_list/item_list/items_bloc.dart';
 import 'package:item_list/item_model.dart';
 import 'package:mockito/mockito.dart';
 
-import 'item_list_mocks.dart';
-import 'test_extensions.dart';
+import '../mocks.dart';
+import '../test_extensions.dart';
 
 void main() {
   final MockInfoBloc bloc = MockInfoBloc();

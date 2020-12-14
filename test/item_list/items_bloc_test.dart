@@ -1,9 +1,11 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:item_list/item_model.dart';
 import 'package:item_list/item_list/items_bloc.dart';
 import 'package:item_list/item_list/items_repository.dart';
+import 'package:item_list/item_model.dart';
 import 'package:mockito/mockito.dart';
+
+import '../mocks.dart';
 
 void main() {
   ItemsRepository mockRepo;
@@ -46,8 +48,7 @@ void main() {
     blocTest(
       "deletes item from list",
       build: () async {
-        when(mockRepo.getItems())
-            .thenAnswer((_) async => []);
+        when(mockRepo.getItems()).thenAnswer((_) async => []);
 
         return ItemsBloc(repo: mockRepo);
       },
@@ -55,9 +56,7 @@ void main() {
         bloc.add(DeleteItem(item.id));
         return;
       },
-      expect: [
-        []
-      ],
+      expect: [[]],
       verify: (_) {
         verify(mockRepo.deleteItem(item.id));
         return;
@@ -67,8 +66,7 @@ void main() {
     blocTest(
       "refreshes the list",
       build: () async {
-        when(mockRepo.getItems())
-            .thenAnswer((_) async => []);
+        when(mockRepo.getItems()).thenAnswer((_) async => []);
 
         return ItemsBloc(repo: mockRepo);
       },
@@ -76,9 +74,7 @@ void main() {
         bloc.add(RefreshItems());
         return;
       },
-      expect: [
-        []
-      ],
+      expect: [[]],
       verify: (_) {
         verify(mockRepo.getItems());
         return;
@@ -86,5 +82,3 @@ void main() {
     );
   });
 }
-
-class MockRepo extends Mock implements ItemsRepository {}

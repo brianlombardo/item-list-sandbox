@@ -5,7 +5,7 @@ import 'package:item_list/item_list/item_input.dart';
 import 'package:item_list/item_list/items_bloc.dart';
 import 'package:mockito/mockito.dart';
 
-import 'item_list_mocks.dart';
+import '../mocks.dart';
 
 void main() {
   final MockInfoBloc bloc = MockInfoBloc();

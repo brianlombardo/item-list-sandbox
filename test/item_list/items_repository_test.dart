@@ -5,6 +5,8 @@ import 'package:item_list/item_model.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
+import '../mocks.dart';
+
 void main() {
   ItemsRepository testObject;
   Client mockClient;
@@ -60,11 +62,11 @@ void main() {
     test('should POST items to server', () {
       testObject.createItem("item text!!!");
 
-      final expectedBody =
-          '{"id":null,"text":"item text!!!"}';
+      final expectedBody = '{"id":null,"text":"item text!!!"}';
 
       verify(
-        mockClient.post(expectedUri, headers: expectedHeaders, body: expectedBody),
+        mockClient.post(expectedUri,
+            headers: expectedHeaders, body: expectedBody),
       );
     });
   });
@@ -78,7 +80,3 @@ void main() {
     });
   });
 }
-
-class MockHttpClient extends Mock implements Client {}
-
-class MockResponse extends Mock implements Response {}
