@@ -10,10 +10,10 @@ class ConnectedItemsBloc extends ItemsBloc {
       : _repo = repo ?? ItemsRepository();
 
   @override
-  List<Item> get initialState => [];
+  ItemListState get initialState => Loading();
 
   @override
-  Stream<List<Item>> mapEventToState(ListEvent event) async* {
+  Stream<ItemListState> mapEventToState(ItemListEvent event) async* {
     switch (event.runtimeType) {
       case AddItem:
         {
@@ -28,6 +28,6 @@ class ConnectedItemsBloc extends ItemsBloc {
         }
     }
     _items = await _repo.getItems();
-    yield _items;
+    yield Loaded(_items);
   }
 }

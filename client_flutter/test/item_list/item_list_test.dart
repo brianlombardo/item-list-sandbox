@@ -15,7 +15,7 @@ void main() {
   final MockInfoBloc bloc = MockInfoBloc();
 
   testWidgets('list is initially empty', (WidgetTester tester) async {
-    when(bloc.state).thenReturn([]);
+    when(bloc.state).thenReturn(Loaded([]));
 
     await tester.pumpWidget(
       BlocProvider<ItemsBloc>.value(
@@ -40,13 +40,13 @@ void main() {
   testWidgets(
       'when items are emitted by the bloc, then the list will display them',
       (WidgetTester tester) async {
-    when(bloc.state).thenReturn([]);
     final testData = [
       Item(text: "Test"),
       Item(text: "Test 2"),
       Item(text: "Test 3")
     ];
-    whenListen(bloc, Stream.fromIterable([<Item>[], testData]));
+    whenListen(
+        bloc, Stream.fromIterable([Loaded([]), Loaded(testData)]));
 
     await tester.pumpWidget(
       BlocProvider<ItemsBloc>.value(
@@ -81,7 +81,7 @@ void main() {
   testWidgets('when item is selected, then the details screen is shown',
       (WidgetTester tester) async {
     final testData = [Item(text: "Test")];
-    when(bloc.state).thenReturn(testData);
+    when(bloc.state).thenReturn(Loaded(testData));
 
     await tester.pumpWidget(
       BlocProvider<ItemsBloc>.value(
@@ -110,7 +110,7 @@ void main() {
       'when item is swiped away, then the item should be removed from list',
       (WidgetTester tester) async {
     final testData = [Item(id: "ID", text: "Test")];
-    when(bloc.state).thenReturn(testData);
+    when(bloc.state).thenReturn(Loaded(testData));
 
     await tester.pumpWidget(
       BlocProvider<ItemsBloc>.value(
@@ -125,7 +125,7 @@ void main() {
 
     Finder dismissibleFinder = find.byType(Dismissible);
     expect(dismissibleFinder, findsOneWidget);
-    expect(bloc.state, equals(testData));
+    expect(bloc.state, equals(Loaded(testData)));
 
     await tester.drag(dismissibleFinder, Offset(500.0, 0.0));
     await tester.pumpAndSettle();

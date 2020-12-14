@@ -3,14 +3,14 @@ import 'package:item_list/item_model.dart';
 
 class FakeItemsBloc extends ItemsBloc {
   List<Item> items = [];
-  List<ListEvent> events = [];
+  List<ItemListEvent> events = [];
 
   @override
-  List<Item> get initialState => items;
+  ItemListState get initialState => Loading();
 
   @override
-  Stream<List<Item>> mapEventToState(ListEvent event) async* {
+  Stream<ItemListState> mapEventToState(ItemListEvent event) async* {
     events.add(event);
-    yield items;
+    yield Loaded(items);
   }
 }

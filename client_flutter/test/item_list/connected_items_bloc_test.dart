@@ -17,10 +17,10 @@ void main() {
 
   group("Items bloc", () {
     blocTest(
-      "empty list initial state",
+      "initial state loading",
       build: () async => ConnectedItemsBloc(repo: mockRepo),
       skip: 0,
-      expect: [[]],
+      expect: [Loading()],
     );
 
     final testItemText = "Test";
@@ -37,7 +37,7 @@ void main() {
         return bloc.add(AddItem(testItemText));
       },
       expect: [
-        [Item(text: testItemText)]
+        Loaded([Item(text: testItemText)])
       ],
       verify: (_) {
         verify(mockRepo.createItem(testItemText));
@@ -57,7 +57,7 @@ void main() {
         bloc.add(DeleteItem(item.id));
         return;
       },
-      expect: [[]],
+      expect: [Loaded([])],
       verify: (_) {
         verify(mockRepo.deleteItem(item.id));
         return;
@@ -75,7 +75,7 @@ void main() {
         bloc.add(RefreshItems());
         return;
       },
-      expect: [[]],
+      expect: [Loaded([])],
       verify: (_) {
         verify(mockRepo.getItems());
         return;
