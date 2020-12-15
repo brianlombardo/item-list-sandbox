@@ -4,7 +4,10 @@ import 'package:item_list/item_list/items_repository.dart';
 import 'package:item_list/item_list/states.dart';
 import 'package:item_list/item_model.dart';
 
-abstract class ItemsBloc extends Bloc<ItemListEvent, ItemListState> {}
+abstract class ItemsBloc extends Bloc<ItemListEvent, ItemListState> {
+  @override
+  ItemListState get initialState => Initial();
+}
 
 class ConnectedItemsBloc extends ItemsBloc {
   List<Item> _items = [];
@@ -14,10 +17,8 @@ class ConnectedItemsBloc extends ItemsBloc {
       : _repo = repo ?? ItemsRepository();
 
   @override
-  ItemListState get initialState => Loading();
-
-  @override
   Stream<ItemListState> mapEventToState(ItemListEvent event) async* {
+    yield Loading();
     switch (event.runtimeType) {
       case AddItem:
         {

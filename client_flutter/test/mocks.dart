@@ -6,7 +6,7 @@ import 'package:item_list/item_list/items_repository.dart';
 import 'package:item_list/item_list/states.dart';
 import 'package:mockito/mockito.dart';
 
-class MockInfoBloc extends MockBloc<ItemListEvent, ItemListState>
+class MockItemsBloc extends MockBloc<ItemListEvent, ItemListState>
     implements ItemsBloc {}
 
 class MockHttpClient extends Mock implements Client {}

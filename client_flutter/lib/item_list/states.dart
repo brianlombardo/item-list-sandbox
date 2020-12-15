@@ -6,6 +6,7 @@ abstract class ItemListState extends Equatable {
   List<Object> get props => [];
 }
 
+class Initial extends ItemListState {}
 class Loading extends ItemListState {}
 
 class LoadFailed extends ItemListState {}

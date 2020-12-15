@@ -14,7 +14,7 @@ import '../mocks.dart';
 import '../test_extensions.dart';
 
 void main() {
-  final MockInfoBloc bloc = MockInfoBloc();
+  final MockItemsBloc bloc = MockItemsBloc();
 
   testWidgets('list is initially empty', (WidgetTester tester) async {
     when(bloc.state).thenReturn(Loaded([]));

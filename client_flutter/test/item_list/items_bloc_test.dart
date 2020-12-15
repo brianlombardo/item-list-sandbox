@@ -21,7 +21,7 @@ void main() {
       "initial state loading",
       build: () async => ConnectedItemsBloc(repo: mockRepo),
       skip: 0,
-      expect: [Loading()],
+      expect: [Initial()],
     );
 
     final testItemText = "Test";
@@ -34,10 +34,11 @@ void main() {
 
         return ConnectedItemsBloc(repo: mockRepo);
       },
-      act: (bloc) {
-        return bloc.add(AddItem(testItemText));
-      },
+      skip: 0,
+      act: (bloc) async => bloc.add(AddItem(testItemText)),
       expect: [
+        Initial(),
+        Loading(),
         Loaded([Item(text: testItemText)])
       ],
       verify: (_) {
@@ -54,11 +55,13 @@ void main() {
 
         return ConnectedItemsBloc(repo: mockRepo);
       },
-      act: (bloc) {
-        bloc.add(DeleteItem(item.id));
-        return;
-      },
-      expect: [Loaded([])],
+      skip: 0,
+      act: (bloc) async => bloc.add(DeleteItem(item.id)),
+      expect: [
+        Initial(),
+        Loading(),
+        Loaded([])
+      ],
       verify: (_) {
         verify(mockRepo.deleteItem(item.id));
         return;
@@ -72,11 +75,13 @@ void main() {
 
         return ConnectedItemsBloc(repo: mockRepo);
       },
-      act: (bloc) {
-        bloc.add(RefreshItems());
-        return;
-      },
-      expect: [Loaded([])],
+      skip: 0,
+      act: (bloc) async => bloc.add(RefreshItems()),
+      expect: [
+        Initial(),
+        Loading(),
+        Loaded([])
+      ],
       verify: (_) {
         verify(mockRepo.getItems());
         return;

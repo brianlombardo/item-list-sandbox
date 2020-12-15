@@ -9,7 +9,7 @@ import 'package:mockito/mockito.dart';
 import '../mocks.dart';
 
 void main() {
-  final MockInfoBloc bloc = MockInfoBloc();
+  final MockItemsBloc bloc = MockItemsBloc();
 
   testWidgets('clicking add button will send field text to the bloc',
       (WidgetTester tester) async {

@@ -8,11 +8,8 @@ class FakeItemsBloc extends ItemsBloc {
   List<ItemListEvent> events = [];
 
   @override
-  ItemListState get initialState => Loading();
-
-  @override
   Stream<ItemListState> mapEventToState(ItemListEvent event) async* {
-    events.add(event);
+    events = [...events, event];
     yield Loaded(items);
   }
 }
