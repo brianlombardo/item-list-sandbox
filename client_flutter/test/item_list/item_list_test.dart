@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:item_list/item_details/item_details_screen.dart';
+import 'package:item_list/item_list/events.dart';
 import 'package:item_list/item_list/item_list.dart';
 import 'package:item_list/item_list/items_bloc.dart';
+import 'package:item_list/item_list/states.dart';
 import 'package:item_list/item_model.dart';
 import 'package:mockito/mockito.dart';
 
@@ -45,8 +47,7 @@ void main() {
       Item(text: "Test 2"),
       Item(text: "Test 3")
     ];
-    whenListen(
-        bloc, Stream.fromIterable([Loaded([]), Loaded(testData)]));
+    whenListen(bloc, Stream.fromIterable([Loaded([]), Loaded(testData)]));
 
     await tester.pumpWidget(
       BlocProvider<ItemsBloc>.value(

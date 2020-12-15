@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:item_list/item_list/items_bloc.dart';
 
-import 'items_bloc.dart';
+import 'events.dart';
 
 class ItemInput extends StatefulWidget {
   final _controller = TextEditingController();
@@ -13,8 +14,7 @@ class ItemInput extends StatefulWidget {
 
 class _ItemInputState extends State<ItemInput> {
   @override
-  Widget build(BuildContext context) =>
-      TextField(
+  Widget build(BuildContext context) => TextField(
         controller: widget._controller,
         style: TextStyle(color: Colors.blue),
         decoration: InputDecoration(

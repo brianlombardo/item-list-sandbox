@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:item_list/item_list/events.dart';
 import 'package:item_list/item_list/item_input.dart';
 import 'package:item_list/item_list/item_list.dart';
 import 'package:item_list/item_list/item_list_screen.dart';
-import 'package:item_list/item_list/items_bloc.dart';
 import 'package:item_list/item_model.dart';
 
 import '../fake_items_bloc.dart';
