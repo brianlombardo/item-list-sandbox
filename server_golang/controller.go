@@ -2,10 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 func GetItems(w http.ResponseWriter, _ *http.Request) {
@@ -49,8 +51,7 @@ func CreateItem(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	item.ID = uuid.New().String()
-
+	item.ID = fmt.Sprintf("%d%s", int32(time.Now().Unix()), uuid.New().String()[0:7])
 	Save(item.ID, item)
 
 	w.Header().Set("Location", r.URL.Path+"/"+item.ID)
