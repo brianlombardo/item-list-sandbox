@@ -33,6 +33,8 @@ class ConnectedItemsBloc extends ItemsBloc {
         }
     }
     _items = await _repo.getItems();
+    _items.sort((item1, item2) => item1.id.compareTo(item2.id));
+    _items = _items.reversed.toList();
     yield Loaded(_items);
   }
 }

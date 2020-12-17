@@ -57,11 +57,7 @@ void main() {
       },
       skip: 0,
       act: (bloc) async => bloc.add(DeleteItem(item.id)),
-      expect: [
-        Initial(),
-        Loading(),
-        Loaded([])
-      ],
+      expect: [Initial(), Loading(), Loaded([])],
       verify: (_) {
         verify(mockRepo.deleteItem(item.id));
         return;
@@ -77,15 +73,39 @@ void main() {
       },
       skip: 0,
       act: (bloc) async => bloc.add(RefreshItems()),
-      expect: [
-        Initial(),
-        Loading(),
-        Loaded([])
-      ],
+      expect: [Initial(), Loading(), Loaded([])],
       verify: (_) {
         verify(mockRepo.getItems());
         return;
       },
+    );
+
+    final unsortedItem0 = Item(text: "item", id: "0");
+    final unsortedItem1 = Item(text: "item", id: "1");
+    final unsortedItem2 = Item(text: "item", id: "2");
+
+    blocTest(
+      "sorts the list in descending order by id",
+      build: () async {
+        when(mockRepo.getItems()).thenAnswer((_) async => [
+              unsortedItem1,
+              unsortedItem0,
+              unsortedItem2,
+            ]);
+
+        return ConnectedItemsBloc(repo: mockRepo);
+      },
+      skip: 0,
+      act: (bloc) async => bloc.add(RefreshItems()),
+      expect: [
+        Initial(),
+        Loading(),
+        Loaded([
+          unsortedItem2,
+          unsortedItem1,
+          unsortedItem0,
+        ])
+      ],
     );
   });
 }
