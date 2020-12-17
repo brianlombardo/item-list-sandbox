@@ -23,18 +23,22 @@ class ItemListScreen extends StatelessWidget {
           title: null,
         ),
         body: BlocBuilder<ItemsBloc, ItemListState>(
-          builder: (context, listState) => Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ItemInput(),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(child: ItemList(bloc: _itemsBloc)),
-              ),
-            ],
-          ),
+          builder: (context, state) => state is Loaded
+              ? Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ItemInput(),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(child: ItemList(bloc: _itemsBloc)),
+                    ),
+                  ],
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                ),
         ),
       ),
     );
