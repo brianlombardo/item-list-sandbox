@@ -107,5 +107,21 @@ void main() {
         ])
       ],
     );
+
+    blocTest(
+      "emits an error when added item is blank",
+      build: () async => ConnectedItemsBloc(repo: mockRepo),
+      skip: 0,
+      act: (bloc) async => bloc.add(AddItem("")),
+      expect: [
+        Initial(),
+        Loading(),
+        Error("Item text cannot be blank"),
+      ],
+      verify: (_) {
+        verifyZeroInteractions(mockRepo);
+        return;
+      },
+    );
   });
 }

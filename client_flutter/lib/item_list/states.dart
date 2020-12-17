@@ -7,9 +7,17 @@ abstract class ItemListState extends Equatable {
 }
 
 class Initial extends ItemListState {}
+
 class Loading extends ItemListState {}
 
-class LoadFailed extends ItemListState {}
+class Error extends ItemListState {
+  final String message;
+
+  Error(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
 
 class Loaded extends ItemListState {
   final List<Item> items;
