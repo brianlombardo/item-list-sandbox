@@ -9,7 +9,21 @@ import 'package:item_list/item_model.dart';
 import '../fake_items_bloc.dart';
 
 void main() {
-  testWidgets('screen will show input and list', (WidgetTester tester) async {
+  // testWidgets('screen will initially show loading indicator',
+  //     (WidgetTester tester) async {
+  //   final fakeItemsBloc = FakeItemsBloc();
+  //   await tester.pumpWidget(
+  //     MaterialApp(
+  //       home: Scaffold(
+  //         body: ItemListScreen(itemsBloc: fakeItemsBloc),
+  //       ),
+  //     ),
+  //   );
+  //   expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  //   fakeItemsBloc.close();
+  // });
+
+  testWidgets('screen will show input and list when data is loaded', (WidgetTester tester) async {
     final fakeItemsBloc = FakeItemsBloc();
 
     await tester.pumpWidget(
@@ -45,5 +59,6 @@ void main() {
     expect(textFinder, findsOneWidget);
     final actualText = (textFinder.evaluate().first.widget as Text).data;
     expect(actualText, equals(blocItemText));
+    fakeItemsBloc.close();
   });
 }
