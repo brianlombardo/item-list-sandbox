@@ -22,10 +22,10 @@ class ConnectedItemsBloc extends ItemsBloc {
     switch (event.runtimeType) {
       case AddItem:
         {
-          final text = (event as AddItem).itemText;
+          final text = (event as AddItem).itemText.trim();
           if (text.isEmpty) {
             yield Error("Item text cannot be blank");
-            return;
+            break;
           }
           await _repo.createItem(text);
           break;

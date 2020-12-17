@@ -27,7 +27,9 @@ void main() {
       (WidgetTester tester) async {
     final fakeItemsBloc = FakeItemsBloc();
     final itemText = "loaded item";
-    fakeItemsBloc.states = [Loaded([Item(text: itemText)])];
+    fakeItemsBloc.states = [
+      Loaded([Item(text: itemText)])
+    ];
 
     await tester.pumpWidget(
       MaterialApp(
@@ -83,6 +85,25 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
     expect(fakeItemsBloc.events, equals([RefreshItems(), AddItem(itemText)]));
 
+    fakeItemsBloc.close();
+  });
+
+  testWidgets('shows message when an error occurs',
+      (WidgetTester tester) async {
+    final message = "error message";
+    final fakeItemsBloc = FakeItemsBloc();
+    fakeItemsBloc.states = [Error(message)];
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ItemListScreen(itemsBloc: fakeItemsBloc),
+        ),
+      ),
+    );
+    await tester.pump(Duration.zero);
+
+    expect(find.byType(SnackBar), findsOneWidget);
+    expect(find.text(message), findsOneWidget);
     fakeItemsBloc.close();
   });
 }

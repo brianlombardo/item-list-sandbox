@@ -19,30 +19,50 @@ class ItemListScreen extends StatelessWidget {
     return BlocProvider<ItemsBloc>.value(
       value: _itemsBloc,
       child: Scaffold(
-        appBar: AppBar(
-          title: null,
-        ),
-        body: BlocBuilder<ItemsBloc, ItemListState>(
-          builder: (context, state) => state is Loaded
-              ? Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ItemInput(bloc: _itemsBloc),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                          child:
-                              ItemList(bloc: _itemsBloc, items: state.items)),
-                    ),
-                  ],
-                )
-              : Center(
-                  child: CircularProgressIndicator(),
-                ),
-        ),
+        appBar: AppBar(),
+        body: _ItemListBody(itemsBloc: _itemsBloc),
       ),
+    );
+  }
+}
+
+class _ItemListBody extends StatelessWidget {
+  final ItemsBloc _itemsBloc;
+
+  const _ItemListBody({ItemsBloc itemsBloc}) : _itemsBloc = itemsBloc;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<ItemsBloc, ItemListState>(
+      child: BlocBuilder<ItemsBloc, ItemListState>(
+        builder: (context, state) => state is Loaded
+            ? Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ItemInput(bloc: _itemsBloc),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                        child: ItemList(
+                      bloc: _itemsBloc,
+                      items: state.items,
+                    )),
+                  ),
+                ],
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              ),
+      ),
+      listener: (_, state) {
+        if (state is Error) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(state.message),
+          ));
+        }
+      },
     );
   }
 }

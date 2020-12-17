@@ -108,18 +108,25 @@ void main() {
       ],
     );
 
+    final blankItemText = " ";
+
     blocTest(
       "emits an error when added item is blank",
-      build: () async => ConnectedItemsBloc(repo: mockRepo),
+      build: () async {
+        when(mockRepo.getItems()).thenAnswer((_) async => []);
+        return ConnectedItemsBloc(repo: mockRepo);
+      },
       skip: 0,
-      act: (bloc) async => bloc.add(AddItem("")),
+      act: (bloc) => bloc.add(AddItem(blankItemText)),
       expect: [
         Initial(),
         Loading(),
         Error("Item text cannot be blank"),
+        Loaded([]),
       ],
       verify: (_) {
-        verifyZeroInteractions(mockRepo);
+        verifyNever(mockRepo.createItem(blankItemText));
+        verify(mockRepo.getItems());
         return;
       },
     );
