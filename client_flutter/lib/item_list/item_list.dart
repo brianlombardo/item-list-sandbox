@@ -1,42 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:item_list/item_details/item_details_screen.dart';
 import 'package:item_list/item_list/items_bloc.dart';
-import 'package:item_list/item_list/states.dart';
 import 'package:item_list/item_model.dart';
 
 import 'events.dart';
 
 class ItemList extends StatelessWidget {
   final ItemsBloc _bloc;
+  final List<Item> _items;
 
-  ItemList({ItemsBloc bloc}) : this._bloc = bloc;
+  ItemList({ItemsBloc bloc, List<Item> items})
+      : this._bloc = bloc,
+        this._items = items ?? [];
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<ItemsBloc, ItemListState>(
-        builder: (context, listState) {
-          final List<Item> items = listState is Loaded ? listState.items : [];
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              final item = items[index];
-              return Dismissible(
-                onDismissed: (direction) =>
-                    {_bloc.add(DeleteItem(items[index].id))},
-                key: UniqueKey(),
-                child: ListTile(
-                  title: Text(item.text),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ItemDetailsScreen(item)),
-                    );
-                  },
-                ),
-              );
-            },
-            itemCount: items.length,
+  Widget build(BuildContext context) => ListView.builder(
+        itemBuilder: (context, index) {
+          final Item item = _items[index];
+          return Dismissible(
+            onDismissed: (direction) =>
+                {_bloc.add(DeleteItem(_items[index].id))},
+            key: UniqueKey(),
+            child: ListTile(
+              title: Text(item.text),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ItemDetailsScreen(item)),
+                );
+              },
+            ),
           );
         },
+        itemCount: _items.length,
       );
 }

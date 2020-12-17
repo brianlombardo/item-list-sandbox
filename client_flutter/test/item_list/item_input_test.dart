@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:item_list/item_list/events.dart';
 import 'package:item_list/item_list/item_input.dart';
-import 'package:item_list/item_list/items_bloc.dart';
 import 'package:mockito/mockito.dart';
 
 import '../mocks.dart';
 
 void main() {
-  final MockItemsBloc bloc = MockItemsBloc();
-
   testWidgets('clicking add button will send field text to the bloc',
       (WidgetTester tester) async {
+    final MockItemsBloc bloc = MockItemsBloc();
     await tester.pumpWidget(
-      BlocProvider<ItemsBloc>.value(
-        value: bloc,
-        child: MaterialApp(
-          home: Scaffold(
-            body: ItemInput(),
+      MaterialApp(
+        home: Scaffold(
+          body: ItemInput(
+            bloc: bloc,
           ),
         ),
       ),
@@ -31,5 +27,6 @@ void main() {
     await tester.pump();
 
     verify(bloc.add(AddItem(testText)));
+    bloc.close();
   });
 }
