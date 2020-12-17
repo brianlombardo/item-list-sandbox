@@ -4,9 +4,8 @@ import 'package:item_list/item_details/item_details_screen.dart';
 import 'package:item_list/item_list/events.dart';
 import 'package:item_list/item_list/item_list.dart';
 import 'package:item_list/item_model.dart';
-import 'package:mockito/mockito.dart';
 
-import '../mocks.dart';
+import '../fake_items_bloc.dart';
 import '../test_extensions.dart';
 
 void main() {
@@ -87,7 +86,7 @@ void main() {
   testWidgets(
       'when item is swiped away, then the item should be removed from list',
       (WidgetTester tester) async {
-    final MockItemsBloc bloc = MockItemsBloc();
+    final FakeItemsBloc bloc = FakeItemsBloc();
 
     final testData = [Item(id: "ID", text: "Test")];
 
@@ -109,7 +108,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(dismissibleFinder, findsNothing);
-    verify(bloc.add(DeleteItem("ID")));
+    expect(bloc.events, equals([DeleteItem("ID")]));
     bloc.close();
   });
 }

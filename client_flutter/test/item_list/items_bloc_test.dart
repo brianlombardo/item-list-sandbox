@@ -18,7 +18,7 @@ void main() {
 
   group("Items bloc", () {
     blocTest(
-      "initial state loading",
+      "emits initial state",
       build: () async => ConnectedItemsBloc(repo: mockRepo),
       skip: 0,
       expect: [Initial()],
