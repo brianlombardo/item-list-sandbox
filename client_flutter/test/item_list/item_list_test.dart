@@ -24,7 +24,7 @@ void main() {
         value: bloc,
         child: MaterialApp(
           home: Scaffold(
-            body: ItemList(),
+            body: ItemList(bloc: bloc),
           ),
         ),
       ),
@@ -54,7 +54,7 @@ void main() {
         value: bloc,
         child: MaterialApp(
           home: Scaffold(
-            body: ItemList(),
+            body: ItemList(bloc: bloc),
           ),
         ),
       ),
@@ -89,7 +89,7 @@ void main() {
         value: bloc,
         child: MaterialApp(
           home: Scaffold(
-            body: ItemList(),
+            body: ItemList(bloc: bloc),
           ),
         ),
       ),
@@ -118,7 +118,7 @@ void main() {
         value: bloc,
         child: MaterialApp(
           home: Scaffold(
-            body: ItemList(),
+            body: ItemList(bloc: bloc),
           ),
         ),
       ),

@@ -29,7 +29,7 @@ class ItemListScreen extends StatelessWidget {
             ),
             Expanded(
               flex: 1,
-              child: Container(child: ItemList()),
+              child: Container(child: ItemList(bloc: _itemsBloc)),
             ),
           ],
         ),

@@ -8,6 +8,10 @@ import 'package:item_list/item_model.dart';
 import 'events.dart';
 
 class ItemList extends StatelessWidget {
+  final ItemsBloc _bloc;
+
+  ItemList({ItemsBloc bloc}) : this._bloc = bloc;
+
   @override
   Widget build(BuildContext context) => BlocBuilder<ItemsBloc, ItemListState>(
         builder: (context, listState) {
@@ -16,10 +20,8 @@ class ItemList extends StatelessWidget {
             itemBuilder: (context, index) {
               final item = items[index];
               return Dismissible(
-                onDismissed: (direction) => {
-                  BlocProvider.of<ItemsBloc>(context)
-                      .add(DeleteItem(items[index].id))
-                },
+                onDismissed: (direction) =>
+                    {_bloc.add(DeleteItem(items[index].id))},
                 key: UniqueKey(),
                 child: ListTile(
                   title: Text(item.text),
