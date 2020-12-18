@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../item_model.dart';
+import '../model/item_model.dart';
 
 class ItemDetailsScreen extends StatelessWidget {
   final Item _item;

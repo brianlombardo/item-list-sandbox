@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:item_list/item_details/item_details_screen.dart';
 import 'package:item_list/item_list/items_bloc.dart';
-import 'package:item_list/item_model.dart';
+import 'package:item_list/model/item_model.dart';
 
 import 'events.dart';
 
@@ -18,9 +18,8 @@ class ItemList extends StatelessWidget {
         itemBuilder: (context, index) {
           final Item item = _items[index];
           return Dismissible(
-            onDismissed: (direction) =>
-                {_bloc.add(DeleteItem(_items[index].id))},
-            key: UniqueKey(),
+            onDismissed: (direction) => {_bloc.add(DeleteItem(item.id))},
+            key: Key(item.id),
             child: ListTile(
               title: Text(item.text),
               onTap: () {

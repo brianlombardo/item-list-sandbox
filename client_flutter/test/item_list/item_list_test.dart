@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:item_list/item_details/item_details_screen.dart';
 import 'package:item_list/item_list/events.dart';
 import 'package:item_list/item_list/item_list.dart';
-import 'package:item_list/item_model.dart';
+import 'package:item_list/model/item_model.dart';
 
 import '../fake_items_bloc.dart';
 import '../test_extensions.dart';

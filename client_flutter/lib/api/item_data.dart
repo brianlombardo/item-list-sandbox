@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 
-class Item extends Equatable {
+class ItemData extends Equatable {
   final String id;
   final String text;
 
-  Item({this.id, this.text});
+  ItemData({this.id, this.text});
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'text': text,
       };
 
-  factory Item.fromJson(Map<String, dynamic> json) =>
-      Item(id: json['id'], text: json['text']);
+  factory ItemData.fromJson(Map<String, dynamic> json) =>
+      ItemData(id: json['id'], text: json['text']);
 
   @override
   List<Object> get props => [id, text];

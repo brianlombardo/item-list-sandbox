@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:item_list/item_model.dart';
+import 'package:item_list/model/item_model.dart';
 
 const SERVER = 'http://localhost:3000/api/v1/items';
 const HEADERS = {'Content-Type': 'application/json'};

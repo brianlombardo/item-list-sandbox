@@ -5,7 +5,7 @@ import 'package:item_list/item_list/item_input.dart';
 import 'package:item_list/item_list/item_list.dart';
 import 'package:item_list/item_list/item_list_screen.dart';
 import 'package:item_list/item_list/states.dart';
-import 'package:item_list/item_model.dart';
+import 'package:item_list/model/item_model.dart';
 
 import '../fake_items_bloc.dart';
 
