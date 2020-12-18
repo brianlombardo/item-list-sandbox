@@ -39,7 +39,6 @@ void main() {
       act: (bloc) async => bloc.add(AddItem(testItemText)),
       expect: [
         Initial(),
-        Loading(),
         Loaded([Item(text: testItemText)])
       ],
       verify: (_) {
@@ -58,7 +57,7 @@ void main() {
       },
       skip: 0,
       act: (bloc) async => bloc.add(DeleteItem(item.id)),
-      expect: [Initial(), Loading(), Loaded([])],
+      expect: [Initial(), Loaded([])],
       verify: (_) {
         verify(mockRepo.deleteItem(item.id));
         return;
@@ -74,7 +73,7 @@ void main() {
       },
       skip: 0,
       act: (bloc) async => bloc.add(RefreshItems()),
-      expect: [Initial(), Loading(), Loaded([])],
+      expect: [Initial(), Loaded([])],
       verify: (_) {
         verify(mockRepo.getItems());
         return;
@@ -100,7 +99,6 @@ void main() {
       act: (bloc) async => bloc.add(RefreshItems()),
       expect: [
         Initial(),
-        Loading(),
         Loaded([
           Item(text: "item", id: "2"),
           Item(text: "item", id: "1"),
@@ -121,13 +119,10 @@ void main() {
       act: (bloc) => bloc.add(AddItem(blankItemText)),
       expect: [
         Initial(),
-        Loading(),
         Error("Item text cannot be blank"),
-        Loaded([]),
       ],
       verify: (_) {
-        verifyNever(mockRepo.createItem(blankItemText));
-        verify(mockRepo.getItems());
+        verifyZeroInteractions(mockRepo);
         return;
       },
     );

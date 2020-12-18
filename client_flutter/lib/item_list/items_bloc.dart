@@ -19,14 +19,13 @@ class ConnectedItemsBloc extends ItemsBloc {
 
   @override
   Stream<ItemListState> mapEventToState(ItemListEvent event) async* {
-    yield Loading();
     switch (event.runtimeType) {
       case AddItem:
         {
           final text = (event as AddItem).itemText.trim();
           if (text.isEmpty) {
             yield Error("Item text cannot be blank");
-            break;
+            return;
           }
           await _repo.createItem(text);
           break;

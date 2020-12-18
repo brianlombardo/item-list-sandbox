@@ -6,10 +6,6 @@ abstract class ItemListState extends Equatable {
   List<Object> get props => [];
 }
 
-class Initial extends ItemListState {}
-
-class Loading extends ItemListState {}
-
 class Error extends ItemListState {
   final String message;
 
@@ -26,4 +22,8 @@ class Loaded extends ItemListState {
 
   @override
   List<Object> get props => [items];
+}
+
+class Initial extends Loaded {
+  Initial() : super([]);
 }

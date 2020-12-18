@@ -10,7 +10,7 @@ import 'package:item_list/model/item_model.dart';
 import '../fake_items_bloc.dart';
 
 void main() {
-  testWidgets('initially shows loading indicator', (WidgetTester tester) async {
+  testWidgets('initially shows empty list', (WidgetTester tester) async {
     final fakeItemsBloc = FakeItemsBloc();
     await tester.pumpWidget(
       MaterialApp(
@@ -19,11 +19,13 @@ void main() {
         ),
       ),
     );
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byType(ItemInput), findsOneWidget);
+    expect(find.byType(ItemList), findsOneWidget);
+    expect(find.byType(ListTile), findsNothing);
     fakeItemsBloc.close();
   });
 
-  testWidgets('shows input and list when data is loaded',
+  testWidgets('shows data when loaded',
       (WidgetTester tester) async {
     final fakeItemsBloc = FakeItemsBloc();
     final itemText = "loaded item";
@@ -38,52 +40,20 @@ void main() {
         ),
       ),
     );
-    final itemInput = find.byType(ItemInput);
-    final itemList = find.byType(ItemList);
-    expect(itemInput, findsNothing);
-    expect(itemList, findsNothing);
+
+    expect(find.byType(ItemInput), findsOneWidget);
+    expect(find.byType(ItemList), findsOneWidget);
+    expect(find.byType(ListTile), findsNothing);
 
     await tester.pump(Duration.zero);
 
-    expect(itemInput, findsOneWidget);
-    expect(itemList, findsOneWidget);
+    expect(find.byType(ItemInput), findsOneWidget);
+    expect(find.byType(ItemList), findsOneWidget);
+    expect(find.byType(ListTile), findsOneWidget);
+
     expect(fakeItemsBloc.events, equals([RefreshItems()]));
     final actualText = (find.byType(Text).evaluate().first.widget as Text).data;
     expect(actualText, equals(itemText));
-
-    fakeItemsBloc.close();
-  });
-
-  testWidgets('shows loading indicator while data is reloading',
-      (WidgetTester tester) async {
-    final fakeItemsBloc = FakeItemsBloc();
-    fakeItemsBloc.states = [Loaded([])];
-
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: ItemListScreen(itemsBloc: fakeItemsBloc),
-        ),
-      ),
-    );
-    await tester.pump(Duration.zero);
-
-    final itemInput = find.byType(ItemInput);
-    final itemList = find.byType(ItemList);
-    expect(itemInput, findsOneWidget);
-    expect(itemList, findsOneWidget);
-
-    fakeItemsBloc.states = [Loading()];
-
-    final itemText = "aloha";
-    await tester.enterText(find.byType(TextField), itemText);
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump(Duration.zero);
-
-    expect(itemInput, findsNothing);
-    expect(itemList, findsNothing);
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    expect(fakeItemsBloc.events, equals([RefreshItems(), AddItem(itemText)]));
 
     fakeItemsBloc.close();
   });
@@ -104,6 +74,8 @@ void main() {
 
     expect(find.byType(SnackBar), findsOneWidget);
     expect(find.text(message), findsOneWidget);
+    expect(find.byType(ItemInput), findsOneWidget);
+    expect(find.byType(ItemList), findsOneWidget);
     fakeItemsBloc.close();
   });
 }
