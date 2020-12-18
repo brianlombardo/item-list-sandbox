@@ -33,30 +33,28 @@ class _ItemListBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ItemsBloc, ItemListState>(
-      child: BlocBuilder<ItemsBloc, ItemListState>(
-        builder: (context, state) => state is Loaded
-            ? Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ItemInput(bloc: _itemsBloc),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                        child: ItemList(
-                      bloc: _itemsBloc,
-                      items: state.items,
-                    )),
-                  ),
-                ],
-              )
-            : Center(
-                child: CircularProgressIndicator(),
-              ),
-      ),
-      listener: (_, state) {
+    return BlocConsumer<ItemsBloc, ItemListState>(
+      builder: (context, state) => state is Loaded
+          ? Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ItemInput(bloc: _itemsBloc),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                      child: ItemList(
+                    bloc: _itemsBloc,
+                    items: state.items,
+                  )),
+                ),
+              ],
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
+      listener: (context, state) {
         if (state is Error) {
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text(state.message),
