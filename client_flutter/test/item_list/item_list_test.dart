@@ -30,9 +30,9 @@ void main() {
   testWidgets('when items are provided, then the list will display them',
       (WidgetTester tester) async {
     final testData = [
-      Item(text: "Test"),
-      Item(text: "Test 2"),
-      Item(text: "Test 3")
+      Item(text: 'Test'),
+      Item(text: 'Test 2'),
+      Item(text: 'Test 3')
     ];
 
     await tester.pumpWidget(
@@ -59,7 +59,7 @@ void main() {
 
   testWidgets('when item is selected, then the details screen is shown',
       (WidgetTester tester) async {
-    final testData = [Item(text: "Test")];
+    final testData = [Item(text: 'Test')];
 
     await tester.pumpWidget(
       MaterialApp(
@@ -88,7 +88,7 @@ void main() {
       (WidgetTester tester) async {
     final FakeItemsBloc bloc = FakeItemsBloc();
 
-    final testData = [Item(id: "ID", text: "Test")];
+    final testData = [Item(id: 'ID', text: 'Test')];
 
     await tester.pumpWidget(
       MaterialApp(
@@ -108,7 +108,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(dismissibleFinder, findsNothing);
-    expect(bloc.events, equals([DeleteItem("ID")]));
+    expect(bloc.events, equals([DeleteItem('ID')]));
     bloc.close();
   });
 }

@@ -19,7 +19,7 @@ void main() {
       ),
     );
 
-    final testText = "Item text";
+    final testText = 'Item text';
 
     await tester.enterText(find.byType(TextField), testText);
     await tester.tap(find.byIcon(Icons.add));

@@ -29,7 +29,7 @@ class ItemsRepository {
 
   Future<http.Response> deleteItem(String id) {
     return _client.delete(
-      Uri.parse("$SERVER/$id"),
+      Uri.parse('$SERVER/$id'),
       headers: HEADERS,
     );
   }

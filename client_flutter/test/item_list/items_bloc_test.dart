@@ -17,18 +17,18 @@ void main() {
     mockRepo = MockRepo();
   });
 
-  group("Items bloc", () {
+  group('Items bloc', () {
     blocTest(
-      "emits initial state",
+      'emits initial state',
       build: () async => ConnectedItemsBloc(repo: mockRepo),
       skip: 0,
       expect: [Initial()],
     );
 
-    final testItemText = "Test";
+    final testItemText = 'Test';
 
     blocTest(
-      "adds item to list",
+      'adds item to list',
       build: () async {
         when(mockRepo.getItems())
             .thenAnswer((_) async => [ItemData(text: testItemText)]);
@@ -47,9 +47,9 @@ void main() {
       },
     );
 
-    final item = Item(id: "ID", text: testItemText);
+    final item = Item(id: 'ID', text: testItemText);
     blocTest(
-      "deletes item from list",
+      'deletes item from list',
       build: () async {
         when(mockRepo.getItems()).thenAnswer((_) async => []);
 
@@ -65,7 +65,7 @@ void main() {
     );
 
     blocTest(
-      "refreshes the list",
+      'refreshes the list',
       build: () async {
         when(mockRepo.getItems()).thenAnswer((_) async => []);
 
@@ -80,12 +80,12 @@ void main() {
       },
     );
 
-    final unsortedItem0 = ItemData(text: "item", id: "0");
-    final unsortedItem1 = ItemData(text: "item", id: "1");
-    final unsortedItem2 = ItemData(text: "item", id: "2");
+    final unsortedItem0 = ItemData(text: 'item', id: '0');
+    final unsortedItem1 = ItemData(text: 'item', id: '1');
+    final unsortedItem2 = ItemData(text: 'item', id: '2');
 
     blocTest(
-      "sorts the list in descending order by id",
+      'sorts the list in descending order by id',
       build: () async {
         when(mockRepo.getItems()).thenAnswer((_) async => [
               unsortedItem1,
@@ -100,17 +100,17 @@ void main() {
       expect: [
         Initial(),
         Loaded([
-          Item(text: "item", id: "2"),
-          Item(text: "item", id: "1"),
-          Item(text: "item", id: "0"),
+          Item(text: 'item', id: '2'),
+          Item(text: 'item', id: '1'),
+          Item(text: 'item', id: '0'),
         ])
       ],
     );
 
-    final blankItemText = " ";
+    final blankItemText = ' ';
 
     blocTest(
-      "emits an error when added item is blank",
+      'emits an error when added item is blank',
       build: () async {
         when(mockRepo.getItems()).thenAnswer((_) async => []);
         return ConnectedItemsBloc(repo: mockRepo);
@@ -119,7 +119,7 @@ void main() {
       act: (bloc) => bloc.add(AddItem(blankItemText)),
       expect: [
         Initial(),
-        Error("Item text cannot be blank"),
+        Error('Item text cannot be blank'),
       ],
       verify: (_) {
         verifyZeroInteractions(mockRepo);

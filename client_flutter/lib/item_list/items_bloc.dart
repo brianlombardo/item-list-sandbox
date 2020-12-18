@@ -24,7 +24,7 @@ class ConnectedItemsBloc extends ItemsBloc {
         {
           final text = (event as AddItem).itemText.trim();
           if (text.isEmpty) {
-            yield Error("Item text cannot be blank");
+            yield Error('Item text cannot be blank');
             return;
           }
           await _repo.createItem(text);

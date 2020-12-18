@@ -50,8 +50,8 @@ void main() {
       final actual = await testObject.getItems();
 
       var expected = [
-        ItemData(id: "1", text: "aloha"),
-        ItemData(id: "2", text: "ciao"),
+        ItemData(id: '1', text: 'aloha'),
+        ItemData(id: '2', text: 'ciao'),
       ];
 
       expect(listEquals(actual, expected), isTrue);
@@ -60,7 +60,7 @@ void main() {
 
   group('creating', () {
     test('should POST items to server', () {
-      testObject.createItem("item text!!!");
+      testObject.createItem('item text!!!');
 
       final expectedBody = '{"id":null,"text":"item text!!!"}';
 
@@ -72,10 +72,10 @@ void main() {
   });
   group('deleting', () {
     test('should DELETE items from server', () {
-      testObject.deleteItem("ID");
+      testObject.deleteItem('ID');
 
       verify(
-        mockClient.delete(Uri.parse("$SERVER/ID"), headers: expectedHeaders),
+        mockClient.delete(Uri.parse('$SERVER/ID'), headers: expectedHeaders),
       );
     });
   });

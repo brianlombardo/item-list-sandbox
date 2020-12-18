@@ -28,7 +28,7 @@ void main() {
   testWidgets('shows data when loaded',
       (WidgetTester tester) async {
     final fakeItemsBloc = FakeItemsBloc();
-    final itemText = "loaded item";
+    final itemText = 'loaded item';
     fakeItemsBloc.states = [
       Loaded([Item(text: itemText)])
     ];
@@ -60,7 +60,7 @@ void main() {
 
   testWidgets('shows message when an error occurs',
       (WidgetTester tester) async {
-    final message = "error message";
+    final message = 'error message';
     final fakeItemsBloc = FakeItemsBloc();
     fakeItemsBloc.states = [Error(message)];
     await tester.pumpWidget(
