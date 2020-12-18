@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:item_list/api/item_data.dart';
 import 'package:item_list/item_list/events.dart';
 import 'package:item_list/item_list/items_repository.dart';
 import 'package:item_list/item_list/states.dart';
@@ -37,9 +38,14 @@ class ConnectedItemsBloc extends ItemsBloc {
           break;
         }
     }
-    _items = await _repo.getItems();
+    final itemsData = await _repo.getItems();
+    _updateItems(itemsData);
+    yield Loaded(_items);
+  }
+
+  _updateItems(List<ItemData> itemsData) {
+    _items = itemsData.map((itemData) => Item.fromItemData(itemData)).toList();
     _items.sort((item1, item2) => item1.id.compareTo(item2.id));
     _items = _items.reversed.toList();
-    yield Loaded(_items);
   }
 }

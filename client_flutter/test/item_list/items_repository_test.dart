@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:item_list/api/item_data.dart';
 import 'package:item_list/item_list/items_repository.dart';
-import 'package:item_list/model/item_model.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -50,8 +50,8 @@ void main() {
       final actual = await testObject.getItems();
 
       var expected = [
-        Item(id: "1", text: "aloha"),
-        Item(id: "2", text: "ciao"),
+        ItemData(id: "1", text: "aloha"),
+        ItemData(id: "2", text: "ciao"),
       ];
 
       expect(listEquals(actual, expected), isTrue);

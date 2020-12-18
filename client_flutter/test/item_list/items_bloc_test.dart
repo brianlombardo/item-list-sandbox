@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:item_list/api/item_data.dart';
 import 'package:item_list/item_list/events.dart';
 import 'package:item_list/item_list/items_bloc.dart';
 import 'package:item_list/item_list/items_repository.dart';
@@ -30,7 +31,7 @@ void main() {
       "adds item to list",
       build: () async {
         when(mockRepo.getItems())
-            .thenAnswer((_) async => [Item(text: testItemText)]);
+            .thenAnswer((_) async => [ItemData(text: testItemText)]);
 
         return ConnectedItemsBloc(repo: mockRepo);
       },
@@ -80,9 +81,9 @@ void main() {
       },
     );
 
-    final unsortedItem0 = Item(text: "item", id: "0");
-    final unsortedItem1 = Item(text: "item", id: "1");
-    final unsortedItem2 = Item(text: "item", id: "2");
+    final unsortedItem0 = ItemData(text: "item", id: "0");
+    final unsortedItem1 = ItemData(text: "item", id: "1");
+    final unsortedItem2 = ItemData(text: "item", id: "2");
 
     blocTest(
       "sorts the list in descending order by id",
@@ -101,9 +102,9 @@ void main() {
         Initial(),
         Loading(),
         Loaded([
-          unsortedItem2,
-          unsortedItem1,
-          unsortedItem0,
+          Item(text: "item", id: "2"),
+          Item(text: "item", id: "1"),
+          Item(text: "item", id: "0"),
         ])
       ],
     );
