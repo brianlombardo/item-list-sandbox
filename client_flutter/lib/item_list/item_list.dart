@@ -22,6 +22,7 @@ class ItemList extends StatelessWidget {
             key: Key(item.id),
             child: ListTile(
               title: Text(item.text),
+              trailing: item.pending ? CircularProgressIndicator() : null,
               onTap: () {
                 Navigator.push(
                   context,

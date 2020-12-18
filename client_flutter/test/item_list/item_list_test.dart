@@ -52,6 +52,7 @@ void main() {
     expect(listFinder.atIndex<ListView>(0).semanticChildCount, equals(3));
     expect(tileFinder, findsNWidgets(3));
     expect(textFinder, findsNWidgets(3));
+    expect(find.byType(CircularProgressIndicator), findsNothing);
     expect(textFinder.atIndex<Text>(0).data, testData[0].text);
     expect(textFinder.atIndex<Text>(1).data, testData[1].text);
     expect(textFinder.atIndex<Text>(2).data, testData[2].text);
@@ -110,5 +111,32 @@ void main() {
     expect(dismissibleFinder, findsNothing);
     expect(bloc.events, equals([DeleteItem('ID')]));
     bloc.close();
+  });
+
+  testWidgets('when a pending item is provided, then an indicator is shown',
+      (WidgetTester tester) async {
+    final testData = [
+      Item(text: 'Test'),
+      Item(text: 'Test 2', pending: true),
+      Item(text: 'Test 3')
+    ];
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ItemList(
+            items: testData,
+          ),
+        ),
+      ),
+    );
+
+    Finder tileFinder = find.byType(ListTile);
+    Finder indicatorFinder = find.byType(CircularProgressIndicator);
+
+    expect(tileFinder, findsNWidgets(3));
+    expect(indicatorFinder, findsNWidgets(1));
+    expect(tileFinder.atIndex<ListTile>(1).trailing,
+        isInstanceOf<CircularProgressIndicator>());
   });
 }
