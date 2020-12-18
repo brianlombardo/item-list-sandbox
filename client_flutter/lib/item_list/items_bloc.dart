@@ -27,6 +27,7 @@ class ConnectedItemsBloc extends ItemsBloc {
             yield Error('Item text cannot be blank');
             return;
           }
+          yield (Loaded([Item(text: text, pending: true), ..._items]));
           await _repo.createItem(text);
           break;
         }
@@ -39,11 +40,15 @@ class ConnectedItemsBloc extends ItemsBloc {
     }
     final itemsData = await _repo.getItems();
     _updateItems(itemsData);
+    _sortItems();
     yield Loaded(_items);
   }
 
   _updateItems(List<ItemData> itemsData) {
     _items = itemsData.map((itemData) => Item.fromItemData(itemData)).toList();
+  }
+
+  void _sortItems() {
     _items.sort((item1, item2) => item1.id.compareTo(item2.id));
     _items = _items.reversed.toList();
   }

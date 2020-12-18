@@ -30,8 +30,12 @@ void main() {
     blocTest(
       'adds item to list',
       build: () async {
-        when(mockRepo.getItems())
-            .thenAnswer((_) async => [ItemData(text: testItemText)]);
+        when(mockRepo.getItems()).thenAnswer((_) async => [
+              ItemData(
+                text: testItemText,
+                id: 'id',
+              )
+            ]);
 
         return ConnectedItemsBloc(repo: mockRepo);
       },
@@ -39,7 +43,8 @@ void main() {
       act: (bloc) async => bloc.add(AddItem(testItemText)),
       expect: [
         Initial(),
-        Loaded([Item(text: testItemText)])
+        Loaded([Item(text: testItemText, id: null, pending: true)]),
+        Loaded([Item(text: testItemText, id: 'id', pending: false)])
       ],
       verify: (_) {
         verify(mockRepo.createItem(testItemText));
