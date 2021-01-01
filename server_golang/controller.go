@@ -6,11 +6,23 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
+	"strconv"
 	"time"
 )
 
+func wait() {
+	delay, err := strconv.ParseInt(os.Args[1], 10, 0)
+	if err == nil {
+		time.Sleep(time.Duration(delay) * time.Second)
+	}
+}
+
 func GetItems(w http.ResponseWriter, _ *http.Request) {
+	wait()
+
 	items := FindAll()
 
 	bytes, err := json.Marshal(items)
@@ -22,6 +34,8 @@ func GetItems(w http.ResponseWriter, _ *http.Request) {
 }
 
 func GetItem(w http.ResponseWriter, r *http.Request) {
+	wait()
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 
@@ -40,6 +54,8 @@ func GetItem(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateItem(w http.ResponseWriter, r *http.Request) {
+	wait()
+
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -59,6 +75,8 @@ func CreateItem(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateItem(w http.ResponseWriter, r *http.Request) {
+	wait()
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 
@@ -77,6 +95,8 @@ func UpdateItem(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteItem(w http.ResponseWriter, r *http.Request) {
+	wait()
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 
@@ -86,5 +106,8 @@ func DeleteItem(w http.ResponseWriter, r *http.Request) {
 
 func writeJsonResponse(w http.ResponseWriter, bytes []byte) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Write(bytes)
+	_, err := w.Write(bytes)
+	if err != nil {
+		log.Print("failed to write Json response")
+	}
 }
