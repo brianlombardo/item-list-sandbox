@@ -9,11 +9,20 @@ class ItemDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(_item.text),
-        ),
+        appBar: AppBar(),
         body: Column(
-          children: <Widget>[],
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Hero(
+                tag: _item.id,
+                child: Material(
+                  child: Text(_item.text),
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+          ],
         ),
       );
 }

@@ -43,8 +43,8 @@ void main() {
       act: (bloc) async => bloc.add(AddItem(testItemText)),
       expect: [
         Initial(),
-        Loaded([Item(text: testItemText, id: null, pending: true)]),
-        Loaded([Item(text: testItemText, id: 'id', pending: false)])
+        Loaded([Item(text: testItemText, pending: true)]),
+        Loaded([Item(text: testItemText, pending: false, id: 'id')])
       ],
       verify: (_) {
         verify(mockRepo.createItem(testItemText));

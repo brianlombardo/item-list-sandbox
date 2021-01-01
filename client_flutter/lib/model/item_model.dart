@@ -6,7 +6,7 @@ class Item extends Equatable {
   final String text;
   final bool pending;
 
-  Item({this.id, this.text, this.pending = false});
+  Item({this.id = "", this.text = "", this.pending = false});
 
   factory Item.fromItemData(ItemData data) => Item(
         id: data.id,

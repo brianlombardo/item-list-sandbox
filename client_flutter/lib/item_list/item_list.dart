@@ -21,7 +21,12 @@ class ItemList extends StatelessWidget {
             onDismissed: (direction) => {_bloc.add(DeleteItem(item.id))},
             key: Key(item.id),
             child: ListTile(
-              title: Text(item.text),
+              title: Hero(
+                  tag: item.id,
+                  child: Material(
+                    child: Text(item.text),
+                    color: Colors.transparent,
+                  )),
               trailing: item.pending ? CircularProgressIndicator() : null,
               onTap: () {
                 Navigator.push(
