@@ -9,6 +9,9 @@ class ItemDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+        ),
         appBar: AppBar(),
         body: Column(
           children: <Widget>[
